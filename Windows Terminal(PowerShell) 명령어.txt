@@ -1,0 +1,21 @@
+Alias 보기
+	get-alias
+
+Alias 설정하기
+	set-alias 새로운명령어 기존명령어
+
+Alias 삭제하기
+	remove-item alias:명령어
+
+	set-alias notebook jupyter-notebook
+	
+Jupyter Notebook 실행
+	python -m notebook
+	py -m notebook
+
+우분투 Jupyter Notebook 백그라운드 실행
+	$ nohup jupyter notebook --allow-root --no-browser &
+	ps -ef | grep 프로세스 이름
+	
+우분투 GoogleDrive 마운트
+	google-drive-ocamlfuse ~/GoogleDrive

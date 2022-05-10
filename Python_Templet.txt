@@ -1,0 +1,91 @@
+# 공통
+# 1.폴더내 파일 리스트 가져오기
+from tkinter import filedialog
+import os
+
+foldername = filedialog.askdirectory()
+
+filearr = os.listdir(foldername)
+
+for file in filearr:
+    print(file)
+
+# 2.폴더내 파일 리스트 가져오기 (확장자 필터 걸어서)
+from tkinter import filedialog
+import os
+import re
+
+foldername = filedialog.askdirectory()
+
+files = [f for f in os.listdir(foldername) if re.match('.*[.]확장자명', f)]
+
+for file in files:
+    print(file)
+
+# 3. \를 /로 변경하기
+import os
+text.replace(os.sep, '/')
+
+# 4. os 라이브러리로 파일 다루기
+import os
+os.path.join("폴더경로","파일이름") #폴더 경로 \\ 파일이름 으로 구조 만들기
+pre,ext = os.path.splitext("파일이름") # 파일이름을 이름과 확장자명 분리하여 pre와 ext에 저장
+
+# PPT
+# 1. python-pptx placeholder 번호 따기
+# ※ python-pptx 라이브러리를 사용하므로 터미널에서 pip install python-pptx 필수
+from pptx import Presentation
+
+prs = Presentation('PPT 파일이름')
+for idx, slide_layout in enumerate(prs.slide_layouts):
+    slide = prs.slides.add_slide(slide_layout)
+    for shape in slide.placeholders:
+        print(idx, shape.placeholder_format.idx, shape.name, shape.top, shape.left)
+
+#2. python-pptx 지정된 Layout으로 Slide 삽입하고, placeholder에 개체 삽입하기
+# ※ python-pptx 라이브러리를 사용하므로 터미널에서 pip install python-pptx 필수
+from pptx import Presentation
+
+prs = Presentation('PPT 파일이름')
+slide_layout = prs.slide_layouts["Layout고유번호(int)"]
+
+sld = prs.slides.add_slide(slide_layout)
+sld.placeholders["고유번호(idx)"].insert_picture("이미지파일이름(경로포함)")
+sld.placeholders["고유번호(idx)"].text = "입력할 Text"
+
+# 3. 파이썬 PPT 각 슬라이드에서 Text Frame 모두 편집하기 (개체, 그룹, 표)
+# pywin32 라이브러리를 사용하므로 터미널에서 pip install pywin32 필수
+import win32com.client
+
+powerpoint = win32com.client.Dispatch("Powerpoint.Application")
+TPath = "읽어올 파일 경로"
+
+ppt = powerpoint.Presentations.Open(TPath)
+
+for sld in ppt.Slides:
+    for shp in sld.shapes:
+        # Text Frame이 있을 때
+        if shp.HasTextFrame == -1:
+            shp.TextFrame.TextRange.  # 이하 편집할 내용
+        # Table 이 있을 때
+        if shp.HasTable == -1:
+            for col in shp.Table.Columns:
+                for cell in col.cells:
+                    cell.Shape.TextFrame.TextRange.  # 이하 편집할 내용
+        # Group 안에 있을때
+        try:
+            for GI in shp.GroupItems:
+                if GI.HasTextFrame == -1:
+                    GI.TextFrame.TextRange.  # 이하 편집할 내용
+        except:
+            pass
+
+# 엑셀
+# 1. 엑셀 날짜 정보를 파이썬 날짜 정보로 인식시키기
+# ※ pandas 라이브러리를 사용하므로 터미널에서 pip install pandas 필수
+
+import pandas as pd
+import datetime as dt
+
+df = pd.read_excel("Sample.xlsx")
+df['real_date'] = pd.TimedeltaIndex(df['Date'], unit='d') + dt.datetime(1899, 12, 30)

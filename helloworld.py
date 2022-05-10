@@ -1,0 +1,5 @@
+print("hello world")
+print("Notepad++")
+print("Notepad++ IDE Run Python")
+print(3/4)
+print("한글보기")
